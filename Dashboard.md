@@ -5,26 +5,32 @@
     <title>Staff / Client Dashboard</title>
 </head>
 <body>
+
     <h1>Staff / Client Dashboard</h1>
+
     <!-- Cashier View -->
     <section id="cashier-view">
         <h2>Cashier View</h2>
         <ul id="cashier-orders"></ul>
     </section>
+
     <!-- Kitchen View -->
     <section id="kitchen-view">
         <h2>Kitchen View</h2>
         <ul id="kitchen-orders"></ul>
     </section>
+
     <!-- Notifications -->
     <section>
         <h2>Notifications</h2>
         <div id="notifications">No new notifications</div>
     </section>
+
     <!-- Undo Button -->
      <section>
     <button id="undoBtn">Undo Last Action</button>
      </section>
+
     <script>
         // -----------------------------
         //   SIMULATED BACKEND DATA
@@ -33,19 +39,25 @@
             { id: 1, status: "Pending" },
             { id: 2, status: "Pending" }
         ];
+
         const actionStack = []; // for undo-ing history
+
+
         // -----------------------------
         //   DOM ELEMENT REFERENCES
         // -----------------------------
         const cashierList = document.getElementById("cashier-orders");
         const kitchenList = document.getElementById("kitchen-orders");
         const notifications = document.getElementById("notifications");
+
+
         // -----------------------------
         //   RENDER UI
         // -----------------------------
         function renderUI() {
             cashierList.innerHTML = "";
             kitchenList.innerHTML = "";
+
             orders.forEach(order => {
                 // CASHIER VIEW - only Pending orders
                 if (order.status === "Pending") {
@@ -56,6 +68,7 @@
                     `;
                     cashierList.appendChild(li);
                 }
+
                 // KITCHEN VIEW - only Paid or higher
                 if (order.status === "Paid" || order.status === "Preparing" || order.status === "Ready") {
                     const li2 = document.createElement("li");
@@ -68,6 +81,8 @@
                 }
             });
         }
+
+
         // -----------------------------
         //   ACTION: MARK PAID
         // -----------------------------
@@ -75,9 +90,12 @@
             const order = orders.find(o => o.id === id);
             actionStack.push({ id: id, prev: order.status }); 
             order.status = "Paid";
+
             sendNotification(`Order #${id} marked as Paid.`);
             renderUI();
         }
+
+
         // -----------------------------
         //   ACTION: UPDATE STATUS
         // -----------------------------
@@ -85,9 +103,12 @@
             const order = orders.find(o => o.id === id);
             actionStack.push({ id: id, prev: order.status });
             order.status = newStatus;
+
             sendNotification(`Order #${id} is now ${newStatus}.`);
             renderUI();
         }
+
+
         // -----------------------------
         //   UNDO ACTION
         // -----------------------------
@@ -96,18 +117,24 @@
                 sendNotification("Nothing to undo.");
                 return;
             }
+
             const last = actionStack.pop();
             const order = orders.find(o => o.id === last.id);
             order.status = last.prev;
+
             sendNotification(`Undo: Order #${last.id} returned to ${last.prev}.`);
             renderUI();
         });
+
+
         // -----------------------------
         //   NOTIFICATION SYSTEM
         // -----------------------------
         function sendNotification(msg) {
             notifications.textContent = msg;
         }
+
+
         // -----------------------------
         //   SIMULATED NEW ORDERS (LIVE)
         // -----------------------------
@@ -115,10 +142,13 @@
             if (Math.random() < 0.25) { // 25% chance
                 const newId = orders.length + 1;
                 orders.push({ id: newId, status: "Pending" });
+
                 sendNotification(`New Order #${newId} received!`);
                 renderUI();
             }
         }, 5000);
+
+
         // Initial UI render
         renderUI();
     </script>
