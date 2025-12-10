@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-<link rel="stylesheet" href="style.css">
-  <meta http-equiv="refresh" content="0; url=Dashboard.html">
-</head>
-<body>
-  Redirecting to Dashboard...
-</body>
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>Staff / Client Dashboard</title>
 </head>
@@ -40,7 +34,7 @@
 
     <script>
         // -----------------------------
-        //   SIMULATED BACKEND DATA
+        //   SIMULATED BACKEND DATA (TEMPORARY)
         // -----------------------------
         let orders = [
             { id: 1, status: "Pending" },
@@ -142,9 +136,9 @@
         }
 
 
-        // -----------------------------
-        //   SIMULATED NEW ORDERS (LIVE)
-        // -----------------------------
+        // ------------------------------------------
+        //   SIMULATED NEW ORDERS (LIVE/TEMPORARY) 
+        // ------------------------------------------
         setInterval(() => {
             if (Math.random() < 0.25) { // 25% chance
                 const newId = orders.length + 1;
